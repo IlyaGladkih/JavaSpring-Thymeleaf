@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>peoples</title>
+</head>
+<body>
+<br>
+<p th:text="${book.book_id}"> FIO </p>
+<p th:text="${book.book_name}"> FIO </p>
+<p th:text="${book.year_of_publication}"> FIO </p>
+<br>
+<div th:if="${book.getPerson().getPerson_id()==0}">
+    <span>No one person take this book</span>
+    <form th:method="POST" th:object="${per}" th:href="@{/books/{id}(id=${book.book_id})}">
+        <label for="opt">persons</label>
+        <select th:object="${per}" th:field="*{person_id}" id="opt">
+            <option th:each="per : ${persons}" th:value="${per.getPerson_id()}" th:text="${per.getFIO()}">
+            </option>
+        </select>
+        <input type="submit" value="push book">
+    </form>
+</div>
+<div th:if="not ${(book.getPerson().getPerson_id()==0)}">
+    User <p th:text="${book.getPerson().getFIO()}"></p> already get this book
+    <a th:href="@{/books/{id}/release(id=${book.book_id})}">release book</a>
+</div>
+<hr>
+<br>
+<a th:href="@{/books/{id}/edit(id=${book.getBook_id()})}">Edit</a>
+<br>
+<form th:method="DELETE" th:object="${book}" th:action="@{/books/{id}(id=${book.getBook_id()})}">
+    <input type="submit" value="Delete person">
+</form>
+</body>
+</html>

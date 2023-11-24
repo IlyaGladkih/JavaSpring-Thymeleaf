@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>peoples</title>
+</head>
+<body>
+<br>
+<p th:text="${person.getPerson_id()}"> FIO </p>
+<p th:text="${person.getFIO()}"> FIO </p>
+<p th:text="${person.getBirthday()}"> FIO </p>
+<br>
+<div th:if="${books.isEmpty()}">
+  <span>"User not take any book"</span>
+</div>
+<div th:if="not ${books.isEmpty()}">
+  <span>"User take a book below"</span>
+  <p th:each="book:${books}" th:text="${book.book_name}"></p>
+</div>
+<br>
+<hr>
+<br>
+<a th:href="@{/persons/{id}/edit(id=${person.getPerson_id()})}">Edit person</a>
+<br>
+<form th:method="DELETE" th:object="${person}" th:action="@{/persons/{id}(id=${person.getPerson_id()})}">
+  <input type="submit" value="Delete person">
+</form>
+</body>
+
+</html>
